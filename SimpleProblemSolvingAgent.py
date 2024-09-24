@@ -11,6 +11,13 @@ from collections import deque
 
 from utils import *
 
+class SimpleProblemSolvingAgent:
+    def __init__(self, start, goal):
+        self.start = start
+        self.goal = goal
+        if(start == goal):
+            print()
+
 
 class Problem:
     """The abstract class for a formal problem. You should subclass
@@ -30,13 +37,13 @@ class Problem:
         state. The result would typically be a list, but if there are
         many actions, consider yielding them one at a time in an
         iterator, rather than building them all at once."""
-        raise NotImplementedError
+        return list(self.graph.get(state).keys())
 
     def result(self, state, action):
         """Return the state that results from executing the given
         action in the given state. The action must be one of
         self.actions(state)."""
-        raise NotImplementedError
+        return action
 
     def goal_test(self, state):
         """Return True if the state is a goal. The default method compares the
@@ -59,7 +66,7 @@ class Problem:
     def value(self, state):
         """For optimization problems, each state has a value. Hill Climbing
         and related algorithms try to maximize this value."""
-        raise NotImplementedError
+        return -self.h(Node(state))
 
 
 # ______________________________________________________________________________
@@ -159,16 +166,16 @@ class SimpleProblemSolvingAgentProgram:
         return self.seq.pop(0)
 
     def update_state(self, state, percept):
-        raise NotImplementedError
+        return state
 
     def formulate_goal(self, state):
-        raise NotImplementedError
+        return self.goal
 
     def formulate_problem(self, state, goal):
-        raise NotImplementedError
+        return GraphProblem(state, goal)
 
     def search(self, problem):
-        raise NotImplementedError
+        return hill_climbing(problem)
 
 
 # ______________________________________________________________________________
@@ -647,7 +654,7 @@ def hill_climbing(problem):
         if problem.value(neighbor.state) <= problem.value(current.state):
             break
         current = neighbor
-    return current.state
+    return current
 
 
 def exp_schedule(k=20, lam=0.005, limit=100):
@@ -662,10 +669,10 @@ def simulated_annealing(problem, schedule=exp_schedule()):
     for t in range(sys.maxsize):
         T = schedule(t)
         if T == 0:
-            return current.state
+            return current
         neighbors = current.expand(problem)
         if not neighbors:
-            return current.state
+            return current
         next_choice = random.choice(neighbors)
         delta_e = problem.value(next_choice.state) - problem.value(current.state)
         if delta_e > 0 or probability(np.exp(delta_e / T)):
