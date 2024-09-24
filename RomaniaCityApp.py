@@ -52,8 +52,8 @@ def main():
         for node in path:
             print(node.state, end=" -> " if node != path[-1] else "\n")
 
-        total_cost = result.path_cost
-        print("Total cost:", total_cost)
+        total_cost_greedy = result.path_cost
+        print("Total cost:", total_cost_greedy)
 
 
         result = astar_search(problem, problem.h)
@@ -64,8 +64,8 @@ def main():
             print(node.state, end=" -> " if node != path[-1] else "\n")
 
 
-        total_cost = result.path_cost
-        print("Total cost:", total_cost)
+        total_cost_astar = result.path_cost
+        print("Total cost:", total_cost_astar)
 
         print("Hill Climbing Search")
 
@@ -76,7 +76,8 @@ def main():
         for node in path:
             print(node.state, end=" -> " if node != path[-1] else "\n")
 
-        print("Total cost:", total_cost)
+        total_cost_hill = result.path_cost
+        print("Total cost:", total_cost_hill)
 
         print("Simulated Annealing Search")
 
@@ -87,7 +88,8 @@ def main():
         for node in path:
             print(node.state, end=" -> " if node != path[-1] else "\n")
 
-        print("Total cost:", total_cost)
+        total_cost_annealing = result.path_cost
+        print("Total cost:", total_cost_annealing)
 
         if input("Would you like to find the best path between the other two cities?: ") != "yes":
             print("Thank You for Using Our App")
