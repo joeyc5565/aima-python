@@ -1,24 +1,15 @@
 from keras.src.backend.jax.core import switch
 
 
-from SimpleProblemSolvingAgent import GraphProblem, best_first_graph_search, astar_search, hill_climbing, UndirectedGraph, simulated_annealing
-
-
-
-
+from SimpleProblemSolvingAgent import GraphProblem, best_first_graph_search, astar_search, hill_climbing, \
+    UndirectedGraph, simulated_annealing, romania_map
 
 
 def main():
     var = True
     while var:
-        same = True
-        while same:
-            start = input("Please enter the origin city: ")
-            end = input("Please enter the destination city: ")
-            if start == end:
-                print("The same city can't be both origin and destination. Please try again")
-            else:
-                same = False
+
+
 
         romania_map = UndirectedGraph(dict(
             Arad=dict(Zerind=75, Sibiu=140, Timisoara=118),
@@ -42,6 +33,17 @@ def main():
             Oradea=(131, 571), Pitesti=(320, 368), Rimnicu=(233, 410),
             Sibiu=(207, 457), Timisoara=(94, 410), Urziceni=(456, 350),
             Vaslui=(509, 444), Zerind=(108, 531))
+
+        same = True
+        while same:
+            start = input("Please enter the origin city: ")
+            end = input("Please enter the destination city: ")
+            if start == end:
+                print("The same city can't be both origin and destination. Please try again")
+            elif start not in romania_map.graph_dict or end not in romania_map.graph_dict:
+                print("The city you entered is not in the list. Please try again")
+            else:
+                same = False
 
         problem = GraphProblem(start, end, romania_map)
 
