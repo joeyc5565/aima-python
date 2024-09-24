@@ -8,9 +8,6 @@ from SimpleProblemSolvingAgent import GraphProblem, best_first_graph_search, ast
 def main():
     var = True
     while var:
-
-
-
         romania_map = UndirectedGraph(dict(
             Arad=dict(Zerind=75, Sibiu=140, Timisoara=118),
             Bucharest=dict(Urziceni=85, Pitesti=101, Giurgiu=90, Fagaras=211),
